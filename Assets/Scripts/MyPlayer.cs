@@ -1,4 +1,5 @@
 using KinematicCharacterController.Examples;
+using System;
 using UnityEngine;
 
 
@@ -7,7 +8,7 @@ public class MyPlayer : MonoBehaviour
     public ExampleCharacterCamera OrbitCamera;
     public Transform CameraFollowPoint;
     public MyCharacterController Character;
-
+    private bool hasOldKey;
     private const string MouseXInput = "Mouse X";
     private const string MouseYInput = "Mouse Y";
     private const string MouseScrollInput = "Mouse ScrollWheel";
@@ -28,9 +29,11 @@ public class MyPlayer : MonoBehaviour
 
     private void Update()
     {
+        
         if (Input.GetMouseButtonDown(0))
         {
             Cursor.lockState = CursorLockMode.Locked;
+            Character.RaycastTryToInteract();
         }
 
         HandleCharacterInput();
@@ -64,10 +67,6 @@ public class MyPlayer : MonoBehaviour
         OrbitCamera.UpdateWithInput(Time.deltaTime, scrollInput, lookInputVector);
 
         // Handle toggling zoom level
-        if (Input.GetMouseButtonDown(1))
-        {
-            OrbitCamera.TargetDistance = (OrbitCamera.TargetDistance == 0f) ? OrbitCamera.DefaultDistance : 0f;
-        }
     }
 
     private void HandleCharacterInput()
@@ -82,4 +81,11 @@ public class MyPlayer : MonoBehaviour
         // Apply inputs to character
         Character.SetInputs(ref characterInputs);
     }
+
+    internal void CollectOldKey()
+    {
+        hasOldKey = true;
+    }
+
+    public bool HasOldKey => hasOldKey;
 }
