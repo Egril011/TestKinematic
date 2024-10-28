@@ -33,6 +33,7 @@ public class MyCharacterController : MonoBehaviour, ICharacterController
 
     private Vector3 _moveInputVector;
     private Vector3 _lookInputVector;
+    public bool hasFlashlight = false;
 
     private void Start()
     {

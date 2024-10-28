@@ -12,5 +12,10 @@ public class OldDoor : MonoBehaviour,IInteractable
         {
             Destroy(door);
         }
+        else
+        {
+            FindAnyObjectByType<SubTitleText>().ShowText("La porte est verouille", 5f);
+        }
+
     }
 }
